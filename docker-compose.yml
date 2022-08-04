@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: ./
+      target: dev
+    volumes:
+      - .:/src
+    container_name: nest_js_web
+    stdin_open: true
+    tty: true
+    ports: 
+      - 3000:3000
+    env_file:
+      .env
