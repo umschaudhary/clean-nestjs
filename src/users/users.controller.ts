@@ -3,47 +3,43 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common'
-import { UsersService } from './users.service'
-import { UpdateUserDto } from './dto/update-user.dto'
 import { User } from '@prisma/client'
+import { UsersService } from './users.service'
+import { CreateUserDto } from './dto/create-user.dto'
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(
-    @Body() createUserDto: { name?: string; email: string; password: string },
-  ) {
-    const { email, name, password } = createUserDto
-    return this.usersService.create({
-      email,
-      name,
-      password,
-    })
+  async create(@Body() createUserDto: CreateUserDto) {
+    const user = await this.usersService.findOne({ email: createUserDto.email })
+
+    if (user) {
+      throw new HttpException(
+        'User with email already exists!',
+        HttpStatus.BAD_REQUEST,
+      )
+    }
+
+    return await this.usersService.create(createUserDto)
   }
 
   @Get()
-  findAll(): Promise<User[]> {
-    return this.usersService.findAll({})
+  async findAll(): Promise<User[]> {
+    return await this.usersService.findAll()
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<User> {
-    return this.usersService.findOne({ id: Number(id) })
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto)
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id)
+  async findOne(@Param('id') id: string): Promise<User | null> {
+    const user = await this.usersService.findOne({ id: Number(id) })
+    if (!user) {
+      throw new HttpException("User with email doesn't exists!", HttpStatus.NOT_FOUND)
+    }
+    return user
   }
 }

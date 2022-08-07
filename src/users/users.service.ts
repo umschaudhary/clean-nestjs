@@ -1,49 +1,26 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { CreateUserDto } from './dto/create-user.dto'
-import { UpdateUserDto } from './dto/update-user.dto'
-import { User, Prisma } from '@prisma/client'
-import { PrismaService } from 'src/prisma/prisma.service'
+import { UserRepository } from './users.repository'
+import { User } from '@prisma/client'
+import { hashPassword } from './utils/password'
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private repo: UserRepository) {}
 
-  create(data: Prisma.UserCreateInput): Promise<User> {
-    return this.prisma.user.create({
-      data,
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const hash = await hashPassword(createUserDto.password)
+    return this.repo.create({
+      ...createUserDto,
+      password: hash,
     })
   }
 
-  findAll(params: {
-    skip?: number
-    take?: number
-    cursor?: Prisma.UserWhereUniqueInput
-    where?: Prisma.UserWhereInput
-    orderBy?: Prisma.UserOrderByWithRelationInput
-  }): Promise<User[]> {
-    const { skip, take, cursor, where, orderBy } = params
-    return this.prisma.user.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
-    })
+  findAll(): Promise<User[]> {
+    return this.repo.findAll({})
   }
 
-  findOne(
-    userWhereUniqueInput: Prisma.UserWhereUniqueInput,
-  ): Promise<User | null> {
-    return this.prisma.user.findUnique({
-      where: userWhereUniqueInput,
-    })
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`
+  findOne(filter: any): Promise<User | null> {
+    return this.repo.findOne(filter)
   }
 }
