@@ -6,6 +6,7 @@ import {
   Param,
   HttpException,
   HttpStatus,
+  HttpCode,
 } from '@nestjs/common'
 import { User } from '@prisma/client'
 import { UsersService } from './users.service'
@@ -54,6 +55,7 @@ export class UsersController {
     return user
   }
 
+  @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<User | null> {
     const user = await this.usersService.findOne({email: loginDto.email})
