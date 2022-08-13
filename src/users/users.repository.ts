@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common'
 import { User, Prisma } from '@prisma/client'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { JwtService } from '@nestjs/jwt'
-import { UserResonse } from './dto'
 
 @Injectable()
 export class UserRepository {
