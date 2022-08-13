@@ -1,11 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { User, Prisma } from '@prisma/client'
-import { UpdateUserDto } from './dto/update-user.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
+import { JwtService } from '@nestjs/jwt'
 
 @Injectable()
 export class UserRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
   async create(data: Prisma.UserCreateInput): Promise<User> {
     return this.prisma.user.create({
@@ -36,5 +36,17 @@ export class UserRepository {
     return this.prisma.user.findUnique({
       where: userWhereUniqueInput,
     })
+  }
+
+  async login(user: User): Promise<any> {
+    const payload = {
+      email: user.email,
+      user_id: user.id,
+    }
+
+    return {
+      accessToken: this.jwtService.sign(payload),
+      user,
+    }
   }
 }

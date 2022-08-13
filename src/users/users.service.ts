@@ -1,8 +1,8 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { CreateUserDto } from './dto/create-user.dto'
+import { Injectable } from '@nestjs/common'
+import { CreateUserDto } from './dto'
 import { UserRepository } from './users.repository'
 import { User } from '@prisma/client'
-import { hashPassword } from './utils/password'
+import { hashPassword, verifyPassword } from './utils/password'
 
 @Injectable()
 export class UsersService {
@@ -16,11 +16,21 @@ export class UsersService {
     })
   }
 
-  findAll(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     return this.repo.findAll({})
   }
 
-  findOne(filter: any): Promise<User | null> {
+  async findOne(filter: any): Promise<User | null> {
     return this.repo.findOne(filter)
+  }
+
+  async validateUser(email: string, pass: string): Promise<User | null> {
+    const user = await this.repo.findOne({ email: email })
+    const isValid = await verifyPassword(pass, user?.password)
+    return isValid ? user : null
+  }
+
+  async login(user: User): Promise<any> {
+    return this.repo.login(user)
   }
 }

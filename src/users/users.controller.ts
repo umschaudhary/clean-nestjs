@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common'
 import { User } from '@prisma/client'
 import { UsersService } from './users.service'
-import { CreateUserDto } from './dto/create-user.dto'
+import { CreateUserDto, LoginDto } from './dto'
 
 @Controller('users')
 export class UsersController {
@@ -51,5 +51,17 @@ export class UsersController {
       )
     }
     return user
+  }
+
+  @Post('login')
+  async login(@Body() loginDto: LoginDto): Promise<User | null> {
+    const user = await this.usersService.validateUser(
+      loginDto.email,
+      loginDto.password,
+    )
+    if (!user) {
+      throw new HttpException('Invalid credential!', HttpStatus.BAD_REQUEST)
+    }
+    return this.usersService.login(user)
   }
 }

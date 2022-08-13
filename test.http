@@ -6,8 +6,9 @@ GET http://localhost:3000
 
 POST http://localhost:3000/users
 Content-Type: application/json
+
 {
-	"name": "Umesh",
-	"email": "umesschaudhary@gmail.com", 
-	"password": "Akash@1111"
+	"email": "Umess11234213@gmail.com", 
+	"password": "abcd",
+	"name": "Ram chaudhary"
 }
