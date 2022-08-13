@@ -17,8 +17,9 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
+    
     const dbUser = await this.usersService.findOne({
-      email: createUserDto.email,
+      email: createUserDto.email.toLowerCase(),
     })
 
     if (dbUser) {
@@ -55,11 +56,13 @@ export class UsersController {
 
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<User | null> {
-    const user = await this.usersService.validateUser(
-      loginDto.email,
-      loginDto.password,
-    )
-    if (!user) {
+    console.log("validating: ")
+    const user = await this.usersService.findOne({email: loginDto.email})
+    if (!user){
+      throw new HttpException("User doesn't exists!", HttpStatus.BAD_REQUEST)
+    }
+    const isValid = await this.usersService.validateUser(loginDto, user)
+    if (!isValid) {
       throw new HttpException('Invalid credential!', HttpStatus.BAD_REQUEST)
     }
     return this.usersService.login(user)

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { CreateUserDto } from './dto'
+import { CreateUserDto, LoginDto } from './dto'
 import { UserRepository } from './users.repository'
 import { User } from '@prisma/client'
 import { hashPassword, verifyPassword } from './utils/password'
@@ -24,10 +24,9 @@ export class UsersService {
     return this.repo.findOne(filter)
   }
 
-  async validateUser(email: string, pass: string): Promise<User | null> {
-    const user = await this.repo.findOne({ email: email })
-    const isValid = await verifyPassword(pass, user?.password)
-    return isValid ? user : null
+  async validateUser(loginDto: LoginDto, user : User): Promise<boolean> {
+    const isValid = await verifyPassword(loginDto.password, user?.password)
+    return isValid
   }
 
   async login(user: User): Promise<any> {
