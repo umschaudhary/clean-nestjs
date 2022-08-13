@@ -56,7 +56,6 @@ export class UsersController {
 
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<User | null> {
-    console.log("validating: ")
     const user = await this.usersService.findOne({email: loginDto.email})
     if (!user){
       throw new HttpException("User doesn't exists!", HttpStatus.BAD_REQUEST)

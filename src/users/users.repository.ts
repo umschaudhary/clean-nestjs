@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { User, Prisma } from '@prisma/client'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { JwtService } from '@nestjs/jwt'
+import { UserResonse } from './dto'
 
 @Injectable()
 export class UserRepository {
@@ -43,10 +44,12 @@ export class UserRepository {
       email: user.email,
       user_id: user.id,
     }
+    const {password, ...userResponse} = user
+
 
     return {
       accessToken: this.jwtService.sign(payload),
-      user,
+      userResponse,
     }
   }
 }
