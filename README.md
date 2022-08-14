@@ -16,9 +16,11 @@ Status : On Going
 - [X] Security
 - [X] CORS
 
+
 ## InProgress/Todo
 - [ ] Authorization/Roles
 - [ ] Pre-Git Hook to ensure code standards eg: no console.log
+- [ ] Hot Reload with Webpack Hot Module Reload (HMR)
 
 ## Project Setup Instructions
 
