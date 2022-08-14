@@ -1,9 +1,9 @@
 # NestJs Template 
 NestJS template
 
-Status : In Progress
+Status : On Going
 
-## Completed
+## Features Included
 - [X] User Model
 - [X] User crud & Authentication
 - [X] Mailer/Email Service Integration
