@@ -6,7 +6,7 @@ Status : In Progress
 ## Completed
 - [X] User Model
 - [X] User crud & Authentication
-- [X] Mailer Integration
+- [X] Mailer/Email Service Integration
 - [X] Prisma
 - [X] Docker
 - [X] Postgresql
