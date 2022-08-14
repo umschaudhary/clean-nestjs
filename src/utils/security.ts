@@ -14,8 +14,6 @@ const setupSecurity = (app: INestApplication) => {
   // Enable Cross-origin resource sharing for a list of domains
   app.enableCors({
     origin: (origin, callback) => {
-      console.log(origin)
-      console.log(allowedOrigins)
       if (!origin || allowedOrigins.some((o) => origin.startsWith(o))) {
         callback(null, true)
       } else {
