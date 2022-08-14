@@ -12,10 +12,10 @@ Status : In Progress
 - [X] Postgresql
 - [X] PgAdmin4
 - [X] Redis
+- [X] Swagger Integration
 
 ## InProgress/Todo
 - [ ] Authorization
-- [ ] Swagger Integration
 - [ ] Security
 
 ## Instructions
@@ -30,4 +30,5 @@ docker-compose up
 docker-compose run web bash
 npx prisma migrate dev
 ```
-4. API running on [Localhost](http://localhost:3000)
+4. Access api running on [Localhost](http://localhost:3000)
+5. Swagger docs [Link](http://localhost:3000/api)
