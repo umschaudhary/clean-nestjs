@@ -1,4 +1,5 @@
 import { IsEmail, IsString, IsNotEmpty } from 'class-validator'
+import { Exclude } from 'class-transformer'
 
 export class CreateUserDto {
   @IsString()
@@ -24,8 +25,15 @@ export class LoginDto {
   password: string
 }
 
-export class UserResonse {
+export class UserResponse {
   id: number
   name?: string
   email: string
+
+  @Exclude()
+  password: string
+
+  constructor(partial: Partial<UserResponse>) {
+    Object.assign(this, partial)
+  }
 }

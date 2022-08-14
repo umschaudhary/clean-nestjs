@@ -16,6 +16,7 @@ services:
       .env
     depends_on:
       - db 
+      - redis
   db:
     image: postgres:13
     container_name: nest-db
@@ -42,6 +43,12 @@ services:
     depends_on:
       - db
 
+  redis:
+    image: "redis:alpine"
+    container_name: nest_redis 
+    env_file:
+      .env
+    ports:
+      - 6379
 volumes:
   pg_db:
-    

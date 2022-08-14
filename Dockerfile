@@ -17,5 +17,5 @@ FROm base as dev
 CMD ["npm", "run", "start:dev"]
 
 FROM base as production
-RUN yarn build
+RUN npm run build
 CMD ["node", "dist/main"]
