@@ -12,7 +12,9 @@ import { User } from '@prisma/client'
 import { UsersService } from './users.service'
 import { CreateUserDto, LoginDto, Userpayload, UserResponse } from './dto'
 import { MailServiceAsync } from 'src/mail/mail.service'
+import { ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger'
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
   constructor(
@@ -21,6 +23,9 @@ export class UsersController {
   ) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create user' })
+  @ApiResponse({ status: HttpStatus.CREATED, description: 'Created!' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request!' })
   async create(@Body() createUserDto: CreateUserDto) {
     const dbUser = await this.userService.findOne({
       email: createUserDto.email.toLowerCase(),
@@ -43,11 +48,17 @@ export class UsersController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get all users' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Ok!' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Internal Server Error!' })
   async findAll(): Promise<User[]> {
     return await this.userService.findAll()
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Find one user' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Ok!' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Internal Server Error!' })
   async findOne(@Param('id') id: string): Promise<User | null> {
     const user = await this.userService.findOne({ id: Number(id) })
     if (!user) {
@@ -61,6 +72,9 @@ export class UsersController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
+  @ApiOperation({ summary: 'Get Access Token' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Ok!' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Internal Server Error!' })
   async login(@Body() loginDto: LoginDto): Promise<User | null> {
     const user = await this.userService.findOne({ email: loginDto.email })
     if (!user) {
@@ -81,6 +95,9 @@ export class UsersController {
 
   @HttpCode(HttpStatus.OK)
   @Post('reconfirmation')
+  @ApiOperation({ summary: 'Send Reconfirmation Email' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Ok!' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Internal Server Error!' })
   async resendConfirmation(@Body() userPayload: Userpayload): Promise<any> {
     const user = await this.userService.findOne(userPayload)
     if (!user) {
@@ -98,6 +115,9 @@ export class UsersController {
 
   // post confirmation
   @Get('/confirmation/:email')
+  @ApiOperation({ summary: 'Confirm User Registration' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Ok!' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Internal Server Error!' })
   async postConfirm(@Param('email') email: string): Promise<any> {
     const update = {
       isActive: true,

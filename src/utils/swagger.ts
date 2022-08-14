@@ -6,7 +6,6 @@ const setUpSwagger = (app: INestApplication) => {
     .setTitle('Nest JS Application')
     .setDescription('The Nest JS API description')
     .setVersion('1.0')
-    .addTag('nestjs')
     .build()
 
   const document = SwaggerModule.createDocument(app, config)
