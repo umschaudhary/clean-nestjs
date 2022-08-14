@@ -10,6 +10,7 @@ Status : In Progress
 - [X] Prisma
 - [X] Docker
 - [X] Postgresql
+- [X] PgAdmin4
 
 ## InProgress/Todo
 - [ ] Authorization
