@@ -45,7 +45,7 @@ export class MailProcessor {
   async sendConfirmationEmail(job: Job<{ user: UserResponse}>): Promise<any> {
     this.logger.log(`Sending confirmation email to '${job.data.user.email}'`);
 
-    const url = `${process.env.HOST_URL}/confirmation/${job.data.user.email}`;
+    const url = `${process.env.HOST_URL}/users/confirmation/${job.data.user.email}`;
 
     try {
       const result = await this.mailerService.sendMail({

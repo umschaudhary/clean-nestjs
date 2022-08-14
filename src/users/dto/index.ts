@@ -37,3 +37,9 @@ export class UserResponse {
     Object.assign(this, partial)
   }
 }
+
+export class Userpayload {
+  name?: string
+  email?: string
+  isActive?: boolean
+}

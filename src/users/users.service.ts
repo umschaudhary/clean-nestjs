@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { CreateUserDto, LoginDto } from './dto'
+import { CreateUserDto, LoginDto, Userpayload } from './dto'
 import { UserRepository } from './users.repository'
 import { User } from '@prisma/client'
 import { hashPassword, verifyPassword } from './utils/password'
@@ -31,5 +31,9 @@ export class UsersService {
 
   async login(user: User): Promise<any> {
     return this.repo.login(user)
+  }
+
+  async update(user: User, payload: Userpayload): Promise<User>{
+    return this.repo.update(user, payload)
   }
 }

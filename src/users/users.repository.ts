@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { User, Prisma } from '@prisma/client'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { JwtService } from '@nestjs/jwt'
+import { Userpayload } from './dto'
 
 @Injectable()
 export class UserRepository {
@@ -42,13 +43,22 @@ export class UserRepository {
     const payload = {
       email: user.email,
       user_id: user.id,
+      is_acitve: user.isActive
     }
-    const {password, ...userResponse} = user
-
+    const { password, ...userResponse } = user
 
     return {
       accessToken: this.jwtService.sign(payload),
       userResponse,
     }
+  }
+
+  async update(user: User, payload: Userpayload): Promise<User> {
+    return this.prisma.user.update({
+      where: {
+        email: user.email,
+      },
+      data: payload,
+    })
   }
 }
