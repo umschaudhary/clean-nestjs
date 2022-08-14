@@ -18,6 +18,7 @@ Status : On Going
 
 ## InProgress/Todo
 - [ ] Authorization/Roles
+- [ ] Pre-Git Hook to ensure code standards eg: no console.log
 
 ## Project Setup Instructions
 
