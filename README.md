@@ -25,4 +25,9 @@ Status : In Progress
 ```bash 
 docker-compose up 
 ```
-3. API running on [Localhost](http://localhost:3000)
+3. Run migrations
+```bash
+docker-compose run web bash
+npx prisma migrate dev
+```
+4. API running on [Localhost](http://localhost:3000)
