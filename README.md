@@ -19,7 +19,7 @@ Status : In Progress
 
 ## Instructions
 
-1. Update .env file
+1. Update `.env` file
 2. Run project with docker
 ```bash 
 docker-compose up 
