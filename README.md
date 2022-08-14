@@ -11,6 +11,7 @@ Status : In Progress
 - [X] Docker
 - [X] Postgresql
 - [X] PgAdmin4
+- [X] Redis
 
 ## InProgress/Todo
 - [ ] Authorization
