@@ -16,3 +16,12 @@ Status : In Progress
 - [ ] Authorization
 - [ ] Swagger Integration
 - [ ] Security
+
+## Instructions
+
+1. Update .env file
+2. Run project with docker
+```bash 
+docker-compose up 
+```
+3. API running on [Localhost](http://localhost:3000)
