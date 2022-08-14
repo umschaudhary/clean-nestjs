@@ -12,6 +12,6 @@ Status : In Progress
 - [X] Postgresql
 
 ## InProgress/Todo
-- [] Authorization
-- [] Swagger Integration
-- [] Security
+- [ ] Authorization
+- [ ] Swagger Integration
+- [ ] Security
