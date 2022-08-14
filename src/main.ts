@@ -1,13 +1,16 @@
-import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import {AppModule} from "./app/app.module" 
-import { setUpSwagger, setupSecurity } from './utils';
+import { ValidationPipe } from '@nestjs/common'
+import { NestFactory } from '@nestjs/core'
+import { NestExpressApplication } from '@nestjs/platform-express'
+import { AppModule } from './app/app.module'
+import { setUpSwagger, setupSecurity } from './utils'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    logger: ['warn', 'log', 'error', 'debug', 'verbose'],
+  })
   app.useGlobalPipes(new ValidationPipe())
   setupSecurity(app)
   setUpSwagger(app)
-  await app.listen(3000);
+  await app.listen(3000)
 }
-bootstrap();
+bootstrap()
