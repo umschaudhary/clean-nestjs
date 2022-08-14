@@ -83,8 +83,6 @@ export class UsersController {
   @Post('reconfirmation')
   async resendConfirmation(@Body() userPayload: Userpayload): Promise<any> {
     const user = await this.userService.findOne(userPayload)
-    console.log("user", user)
-    console.log("payload", userPayload)
     if (!user) {
       throw new HttpException("User doesn't exists!", HttpStatus.BAD_REQUEST)
     }
