@@ -13,12 +13,13 @@ Status : On Going
 - [X] PgAdmin4
 - [X] Redis
 - [X] Swagger Integration
+- [X] Security
+- [X] CORS
 
 ## InProgress/Todo
-- [ ] Authorization
-- [ ] Security
+- [ ] Authorization/Roles
 
-## Instructions
+## Project Setup Instructions
 
 1. Update `.env` file
 2. Run project with docker
