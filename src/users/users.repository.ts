@@ -49,7 +49,7 @@ export class UserRepository {
 
     return {
       accessToken: this.jwtService.sign(payload),
-      userResponse,
+      user: userResponse,
     }
   }
 
